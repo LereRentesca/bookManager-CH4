@@ -31,22 +31,24 @@ struct DetailView: View {
                             .foregroundColor(.secondary)
                     }
                 }
-                HStack {
-                    if (book.status != .unknown) {
-                        CustomCapsule(text: book.status.rawValue, color: .secondary)
+                VStack(alignment: .leading, spacing: 15) {
+                    HStack {
+                        if (book.status != .unknown) {
+                            CustomCapsule(text: book.status.rawValue, color: .secondary)
+                        }
+                        if (book.genre != .unknown) {
+                            CustomCapsule(text: book.genre.text, color: book.genre.color)
+                        }
                     }
-                    if (book.genre != .unknown) {
-                        CustomCapsule(text: book.genre.rawValue, color: .secondary)
+                    Text(book.details)
+                    if (book.rating == 0) {
+                        Text("No rating yet.")
+                    } else {
+                        Text("Rating: \(book.rating)\(book.rating == 1 ? " star" : " stars")")
                     }
+                    Text("My Review: \(book.review)")
                 }
-                Text(book.details)
-                    .padding(.horizontal, 20)
-                if (book.rating == 0) {
-                    Text("No rating yet.")
-                } else {
-                    Text("Rating: \(book.rating)\(book.rating == 1 ? " star" : " stars")")
-                }
-                Text("My Review: \(book.review)")
+                .padding(.horizontal, 20)
             }
         }
         .navigationBarItems(trailing: Button("Edit"){

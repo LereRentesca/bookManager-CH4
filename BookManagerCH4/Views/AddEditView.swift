@@ -34,7 +34,7 @@ struct AddEditView: View {
                     TextField("Author", text: $workingBook.author)
                     Picker("Genre", selection: $workingBook.genre){
                         ForEach(Genre.allCases, id: \.self) {
-                            genre in Text(genre.rawValue).tag(genre)
+                            genre in Text(genre.text).tag(genre)
                         }
                     }
                     TextEditor(text: $workingBook.details)
