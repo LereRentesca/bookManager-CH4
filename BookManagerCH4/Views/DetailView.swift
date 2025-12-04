@@ -39,6 +39,8 @@ struct DetailView: View {
                         if (book.genre != .unknown) {
                             CustomCapsule(text: book.genre.text, color: book.genre.color)
                         }
+                        Spacer()
+                        FavoriteToggle(isFavorite: $book.isFavorite)
                     }
                     Text(book.details)
                     if (book.rating == 0) {

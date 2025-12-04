@@ -10,33 +10,19 @@ import SwiftData
 
 struct ContentView: View {
     
-    @State var books = getBooks() // A mock of an API call to get all books an render a List
-    @State var showAddBookSheet: Bool = false //Used to open the add book sheet
-    @State var newBook = Book(title: "", author: "", details: "") //New book we use to edit it and add it
+    @State var books: [Book] = getBooks() // A mock of an API call to get all books an render a List
     
     var body: some View {
-        NavigationStack{
-            List($books, id: \.self.id) { bookInList in
-                NavigationLink(destination: DetailView(book: bookInList)) {
-                    BookLinkItem(book: bookInList)
+        TabView {
+            BookListView(books: $books)
+                .tabItem {
+                    Label("Books", systemImage: "books.vertical.fill")
                 }
-            }
-            .navigationBarTitle("Book Manager")
-            .navigationBarItems(trailing: Button("Add"){
-                // whenever we click the button execute this:
-                showAddBookSheet.toggle()
-            })
-            .sheet(isPresented: $showAddBookSheet){
-                //onDismiss
-                if(!newBook.title.isEmpty){
-                    books.append(newBook)
+            FavoritesView(books: $books)
+                .tabItem {
+                    Label("Favorites", systemImage: "heart.fill")
                 }
-                newBook = Book(title: "", author: "", details: "")
-            }
-            content:{
-                AddEditView(bookToEdit: $newBook)
-            }
-        }
+        }.tabViewStyle(.tabBarOnly)
     }
 }
 
